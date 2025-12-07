@@ -21,12 +21,9 @@
             font-size: 1.1em;
             border: 2px solid #ddd;
             border-radius: 4px;
-            box-sizing: border-box; /* Ensures padding doesn't widen element */
+            box-sizing: border-box;
         }
-        #search-input:focus {
-            border-color: #007bff;
-            outline: none;
-        }
+        #search-input:focus { border-color: #007bff; outline: none; }
 
         .tag-btn {
             display: inline-block;
@@ -55,11 +52,7 @@
         .hidden { display: none !important; }
 
         #filter-status {
-            margin-bottom: 10px;
-            font-size: 0.9em;
-            color: #666;
-            min-height: 20px;
-            font-style: italic;
+            margin-bottom: 10px; font-size: 0.9em; color: #666; font-style: italic;
         }
     </style>
 </head>
@@ -403,7 +396,7 @@ sudo limine-mkinitcpio
             </div>
 
             <div id="no-results" class="hidden" style="color: red; padding: 20px; text-align: center;">
-                No matches found. Try a different search term or tag.
+                No matches found.
             </div>
         </div>
     </div>
@@ -411,19 +404,27 @@ sudo limine-mkinitcpio
     <script>
         let selectedTags = [];
 
-        // 1. Run on Page Load: Check URL for ?tag=something
+        // 1. Run on Page Load: Check URL for ?tag=... OR ?search=...
         window.onload = function() {
             const urlParams = new URLSearchParams(window.location.search);
-            const tagParam = urlParams.get('tag');
 
+            // Handle ?tag=linux
+            const tagParam = urlParams.get('tag');
             if (tagParam) {
-                // Find the button and simulate a click or manually set state
                 const buttons = document.querySelectorAll('.tag-btn');
                 buttons.forEach(btn => {
                     if (btn.innerText === '#' + tagParam) {
                         toggleTag(tagParam, btn);
                     }
                 });
+            }
+
+            // Handle ?search=python
+            const searchParam = urlParams.get('search');
+            if (searchParam) {
+                const searchInput = document.getElementById('search-input');
+                searchInput.value = searchParam;
+                applyFilters(); // Trigger filter immediately
             }
         };
 
@@ -440,13 +441,15 @@ sudo limine-mkinitcpio
 
         function resetFilters() {
             selectedTags = [];
-            document.getElementById('search-input').value = ""; // Clear search
+            document.getElementById('search-input').value = "";
             document.querySelectorAll('.tag-btn').forEach(btn => {
                 if (!btn.classList.contains('reset-btn')) {
                     btn.classList.remove('active');
                 }
             });
             applyFilters();
+            // Clear URL params visually (optional)
+            window.history.pushState({}, document.title, window.location.pathname);
         }
 
         function applyFilters() {
@@ -457,22 +460,16 @@ sudo limine-mkinitcpio
 
             let visibleCount = 0;
 
-            // Status Text Logic
             let statusString = "Showing articles";
             if (selectedTags.length > 0) statusString += " tagged: " + selectedTags.join(" + ");
             if (searchTerm.length > 0) statusString += " matching: '" + searchTerm + "'";
-            if (selectedTags.length === 0 && searchTerm.length === 0) statusString = "Showing all articles";
             statusText.innerText = statusString;
 
-            // Filtering Logic
             articles.forEach(article => {
                 const articleTags = article.getAttribute('data-tags').split(',');
                 const searchData = article.getAttribute('data-search');
 
-                // Check 1: Tags (Must match ALL selected tags)
                 const tagMatch = selectedTags.length === 0 || selectedTags.every(val => articleTags.includes(val));
-
-                // Check 2: Search (Title/Content must contain search term)
                 const textMatch = searchTerm.length === 0 || searchData.includes(searchTerm);
 
                 if (tagMatch && textMatch) {
@@ -483,12 +480,8 @@ sudo limine-mkinitcpio
                 }
             });
 
-            // No Results Logic
-            if (visibleCount === 0) {
-                noResultsMsg.classList.remove('hidden');
-            } else {
-                noResultsMsg.classList.add('hidden');
-            }
+            if (visibleCount === 0) noResultsMsg.classList.remove('hidden');
+            else noResultsMsg.classList.add('hidden');
         }
     </script>
 </body>

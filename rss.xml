@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 07 Dec 2025 16:54:04 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 07 Dec 2025 16:56:40 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -153,6 +153,7 @@ python <span class="hljs-comment">--version</span>
 <div><pre class="hljs"><code><span class="hljs-keyword">build</span>/yt-dlp.exe</code></pre></div>
 <hr />
 <h1 id="guide-complete"><strong>Guide Complete</strong></h1>
+<p><strong>Note:</strong> you can not download videos from youtube and other streaming sources.</p>
 ]]></content:encoded>
         </item>
         <item>

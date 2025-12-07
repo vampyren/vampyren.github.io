@@ -4,19 +4,15 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 07 Dec 2025 04:11:26 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 07 Dec 2025 04:18:03 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
             <title><![CDATA[Build yt-dlp.exe]]></title>
             <guid>4800d155441c47de8e373261548cb41d</guid>
             <pubDate>Sun, 07 Dec 2025 02:21:15 GMT</pubDate>
-            <content:encoded><![CDATA[<p>Below is the <strong>Joplin-optimized Markdown</strong> version — <strong>pure Markdown</strong>, <strong>strict tables</strong>, <strong>no HTML</strong>, <strong>no embeds</strong>, easy to paste and save in Joplin.<br />
-Includes <strong>PowerShell + Git Bash instructions</strong> clearly separated.</p>
-<hr />
+            <content:encoded><![CDATA[<p> </p>
 <h1 id="build-yt-dlpexe-from-source-on-windows-final-guide"><strong>Build yt-dlp.exe From Source on Windows (Final Guide)</strong></h1>
-<p><em>Joplin-optimized version</em></p>
-<hr />
 <h2 id="1-required-tools"><strong>1. Required Tools</strong></h2>
 <p>Download and install the following:</p>
 <h3 id="python"><strong>Python</strong></h3>

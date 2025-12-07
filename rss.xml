@@ -4,15 +4,14 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 07 Dec 2025 17:37:41 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 07 Dec 2025 17:46:16 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
             <title><![CDATA[Build yt-dlp.exe]]></title>
             <guid>4800d155441c47de8e373261548cb41d</guid>
             <pubDate>Sun, 07 Dec 2025 02:21:15 GMT</pubDate>
-            <content:encoded><![CDATA[<p> </p>
-<h1 id="build-yt-dlpexe-from-source-on-windows-final-guide"><strong>Build yt-dlp.exe From Source on Windows (Final Guide)</strong></h1>
+            <content:encoded><![CDATA[<h1 id="build-yt-dlpexe-from-source-on-windows-final-guide"><strong>Build yt-dlp.exe From Source on Windows (Final Guide)</strong></h1>
 <h2 id="1-required-tools"><strong>1. Required Tools</strong></h2>
 <p>Download and install the following:</p>
 <h3 id="python"><strong>Python</strong></h3>

@@ -8,7 +8,6 @@
 
     <title>Tags - vampyren.github.io</title>
     <style>
-        /* Enkel CSS för knapparna */
         .tag-btn {
             display: inline-block;
             padding: 8px 15px;
@@ -19,22 +18,39 @@
             cursor: pointer;
             font-size: 0.9em;
             transition: all 0.2s;
+            user-select: none; /* Gör att texten inte markeras när man spam-klickar */
         }
         .tag-btn:hover {
             background-color: #e0e0e0;
             border-color: #999;
         }
+        /* Aktiv knapp (vald) */
         .tag-btn.active {
+            background-color: #007bff; /* Blå färg */
+            color: white;
+            border-color: #0056b3;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        /* Reset-knappen */
+        .tag-btn.reset-btn {
             background-color: #333;
             color: white;
-            border-color: #333;
+            border-color: #000;
         }
         .article-item {
             padding: 15px 0;
             border-bottom: 1px solid #eee;
+            transition: opacity 0.3s;
         }
         .hidden {
             display: none !important;
+        }
+        /* Visar hur många filter som är valda */
+        #filter-status {
+            margin-bottom: 10px;
+            font-size: 0.9em;
+            color: #666;
+            min-height: 20px;
         }
     </style>
 </head>
@@ -45,19 +61,23 @@
         </nav>
 
         <div class="homepage-main">
-            <h1>Filter by Tag</h1>
+            <h1>Filtrera på Taggar</h1>
+
+            <p id="filter-status">Visar alla artiklar</p>
 
             <div id="tag-container" style="margin-bottom: 30px;">
-                <button class="tag-btn active" onclick="filterArticles('all')">Show All</button>
+                <button class="tag-btn reset-btn" onclick="resetFilters()">Visa alla (Nollställ)</button>
+
                 
+
                 
-                    <button class="tag-btn" onclick="filterArticles('boot')">#boot</button>
+                    <button class="tag-btn" onclick="toggleTag('boot', this)">#boot</button>
                 
-                    <button class="tag-btn" onclick="filterArticles('cachyos')">#cachyos</button>
+                    <button class="tag-btn" onclick="toggleTag('cachyos', this)">#cachyos</button>
                 
-                    <button class="tag-btn" onclick="filterArticles('guide')">#guide</button>
+                    <button class="tag-btn" onclick="toggleTag('guide', this)">#guide</button>
                 
-                    <button class="tag-btn" onclick="filterArticles('yt-dlp')">#yt-dlp</button>
+                    <button class="tag-btn" onclick="toggleTag('yt-dlp', this)">#yt-dlp</button>
                 
             </div>
 
@@ -100,33 +120,77 @@
                     </div>
                 
             </div>
+
+            <div id="no-results" class="hidden" style="color: red; padding: 20px;">
+                Inga artiklar matchar exakt denna kombination av taggar.
+            </div>
         </div>
     </div>
 
     <script>
-        function filterArticles(tag) {
-            const articles = document.querySelectorAll('.article-item');
-            const buttons = document.querySelectorAll('.tag-btn');
+        // Vi sparar valda taggar i en lista
+        let selectedTags = [];
 
-            // 1. Uppdatera vilken knapp som är "Aktiv" (färg)
-            buttons.forEach(btn => {
-                btn.classList.remove('active');
-                // Kolla om knappens text matchar taggen
-                if (btn.innerText.includes(tag) || (tag === 'all' && btn.innerText === 'Show All')) {
-                    btn.classList.add('active');
+        function toggleTag(tag, btnElement) {
+            // 1. Lägg till eller ta bort taggen från listan
+            if (selectedTags.includes(tag)) {
+                selectedTags = selectedTags.filter(t => t !== tag); // Ta bort
+                btnElement.classList.remove('active');
+            } else {
+                selectedTags.push(tag); // Lägg till
+                btnElement.classList.add('active');
+            }
+
+            // 2. Uppdatera artiklarna
+            applyFilters();
+        }
+
+        function resetFilters() {
+            selectedTags = [];
+            // Ta bort 'active' från alla knappar
+            document.querySelectorAll('.tag-btn').forEach(btn => {
+                if (!btn.classList.contains('reset-btn')) {
+                    btn.classList.remove('active');
                 }
             });
+            applyFilters();
+        }
 
-            // 2. Visa eller dölj artiklar
+        function applyFilters() {
+            const articles = document.querySelectorAll('.article-item');
+            const statusText = document.getElementById('filter-status');
+            const noResultsMsg = document.getElementById('no-results');
+            let visibleCount = 0;
+
+            // Uppdatera status-texten
+            if (selectedTags.length === 0) {
+                statusText.innerText = "Visar alla artiklar";
+            } else {
+                statusText.innerText = "Visar artiklar som har: " + selectedTags.join(" + ");
+            }
+
+            // Loopa igenom artiklar och kolla matchning
             articles.forEach(article => {
                 const articleTags = article.getAttribute('data-tags').split(',');
 
-                if (tag === 'all' || articleTags.includes(tag)) {
+                // LOGIKEN: Alla valda taggar måste finnas i artikelns taggar (AND)
+                // Tips: Byt .every() mot .some() om du vill ha "OR" (Guide ELLER Linux)
+                const isMatch = selectedTags.every(val => articleTags.includes(val));
+
+                if (isMatch || selectedTags.length === 0) {
                     article.classList.remove('hidden');
+                    visibleCount++;
                 } else {
                     article.classList.add('hidden');
                 }
             });
+
+            // Visa meddelande om inget hittades
+            if (visibleCount === 0) {
+                noResultsMsg.classList.remove('hidden');
+            } else {
+                noResultsMsg.classList.add('hidden');
+            }
         }
     </script>
 </body>

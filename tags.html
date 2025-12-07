@@ -1,35 +1,111 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <link rel="stylesheet" href="/_assets/main.css" />
 
     <title>Tags - vampyren.github.io</title>
-  </head>
-  <body>
+    <style>
+        /* Enkel CSS för knapparna */
+        .tag-btn {
+            display: inline-block;
+            padding: 8px 15px;
+            margin: 5px;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: all 0.2s;
+        }
+        .tag-btn:hover {
+            background-color: #e0e0e0;
+            border-color: #999;
+        }
+        .tag-btn.active {
+            background-color: #333;
+            color: white;
+            border-color: #333;
+        }
+        .article-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
     <div class="main">
-      <nav class="navigation">
-        <a href="/">vampyren.github.io</a>
-      </nav>
-      <div class="homepage-main">
-        <h1>Categories / Tags</h1>
-        <ul>
-          
-          
-              
-                  <li style="font-size: 1.2em; margin: 10px 0;">
-                      <span class="keyword">#yt-dlp</span>
-                  </li>
-              
-                  <li style="font-size: 1.2em; margin: 10px 0;">
-                      <span class="keyword">#guide</span>
-                  </li>
-              
-          
-        </ul>
-      </div>
+        <nav class="navigation">
+            <a href="/">vampyren.github.io</a>
+        </nav>
+
+        <div class="homepage-main">
+            <h1>Filter by Tag</h1>
+
+            <div id="tag-container" style="margin-bottom: 30px;">
+                <button class="tag-btn active" onclick="filterArticles('all')">Show All</button>
+                
+                
+                    <button class="tag-btn" onclick="filterArticles('guide')">#guide</button>
+                
+                    <button class="tag-btn" onclick="filterArticles('yt-dlp')">#yt-dlp</button>
+                
+            </div>
+
+            <div id="article-list">
+                
+                    <div class="article-item" data-tags="yt-dlp,guide">
+                        <time style="color: gray; font-size: 0.8em;">
+                            2025-12-07
+                        </time>
+                        <h3 style="margin-top: 5px;">
+                            <a href="/article/build-yt-dlp.exe" style="text-decoration: none; color: #333;">
+                                Build yt-dlp.exe
+                            </a>
+                        </h3>
+                        <div>
+                            
+                                <span style="font-size: 0.8em; color: #666; background: #eee; padding: 2px 6px; border-radius: 4px;">#yt-dlp</span>
+                            
+                                <span style="font-size: 0.8em; color: #666; background: #eee; padding: 2px 6px; border-radius: 4px;">#guide</span>
+                            
+                        </div>
+                    </div>
+                
+            </div>
+        </div>
     </div>
-  </body>
+
+    <script>
+        function filterArticles(tag) {
+            const articles = document.querySelectorAll('.article-item');
+            const buttons = document.querySelectorAll('.tag-btn');
+
+            // 1. Uppdatera vilken knapp som är "Aktiv" (färg)
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+                // Kolla om knappens text matchar taggen
+                if (btn.innerText.includes(tag) || (tag === 'all' && btn.innerText === 'Show All')) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // 2. Visa eller dölj artiklar
+            articles.forEach(article => {
+                const articleTags = article.getAttribute('data-tags').split(',');
+
+                if (tag === 'all' || articleTags.includes(tag)) {
+                    article.classList.remove('hidden');
+                } else {
+                    article.classList.add('hidden');
+                }
+            });
+        }
+    </script>
+</body>
 </html>

@@ -18,20 +18,20 @@
             cursor: pointer;
             font-size: 0.9em;
             transition: all 0.2s;
-            user-select: none; /* Gör att texten inte markeras när man spam-klickar */
+            user-select: none;
         }
         .tag-btn:hover {
             background-color: #e0e0e0;
             border-color: #999;
         }
-        /* Aktiv knapp (vald) */
+        /* Active button (Selected) */
         .tag-btn.active {
-            background-color: #007bff; /* Blå färg */
+            background-color: #007bff; /* Blue */
             color: white;
             border-color: #0056b3;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        /* Reset-knappen */
+        /* Reset button */
         .tag-btn.reset-btn {
             background-color: #333;
             color: white;
@@ -45,7 +45,7 @@
         .hidden {
             display: none !important;
         }
-        /* Visar hur många filter som är valda */
+        /* Status text showing active filters */
         #filter-status {
             margin-bottom: 10px;
             font-size: 0.9em;
@@ -61,12 +61,12 @@
         </nav>
 
         <div class="homepage-main">
-            <h1>Filtrera på Taggar</h1>
+            <h1>Filter by Tags</h1>
 
-            <p id="filter-status">Visar alla artiklar</p>
+            <p id="filter-status">Showing all articles</p>
 
             <div id="tag-container" style="margin-bottom: 30px;">
-                <button class="tag-btn reset-btn" onclick="resetFilters()">Visa alla (Nollställ)</button>
+                <button class="tag-btn reset-btn" onclick="resetFilters()">Show All (Reset)</button>
 
                 
 
@@ -122,32 +122,30 @@
             </div>
 
             <div id="no-results" class="hidden" style="color: red; padding: 20px;">
-                Inga artiklar matchar exakt denna kombination av taggar.
+                No articles match this combination of tags.
             </div>
         </div>
     </div>
 
     <script>
-        // Vi sparar valda taggar i en lista
         let selectedTags = [];
 
         function toggleTag(tag, btnElement) {
-            // 1. Lägg till eller ta bort taggen från listan
+            // 1. Add or remove tag from selection
             if (selectedTags.includes(tag)) {
-                selectedTags = selectedTags.filter(t => t !== tag); // Ta bort
+                selectedTags = selectedTags.filter(t => t !== tag);
                 btnElement.classList.remove('active');
             } else {
-                selectedTags.push(tag); // Lägg till
+                selectedTags.push(tag);
                 btnElement.classList.add('active');
             }
 
-            // 2. Uppdatera artiklarna
+            // 2. Apply the filter
             applyFilters();
         }
 
         function resetFilters() {
             selectedTags = [];
-            // Ta bort 'active' från alla knappar
             document.querySelectorAll('.tag-btn').forEach(btn => {
                 if (!btn.classList.contains('reset-btn')) {
                     btn.classList.remove('active');
@@ -162,19 +160,18 @@
             const noResultsMsg = document.getElementById('no-results');
             let visibleCount = 0;
 
-            // Uppdatera status-texten
+            // Update status text
             if (selectedTags.length === 0) {
-                statusText.innerText = "Visar alla artiklar";
+                statusText.innerText = "Showing all articles";
             } else {
-                statusText.innerText = "Visar artiklar som har: " + selectedTags.join(" + ");
+                statusText.innerText = "Showing articles with: " + selectedTags.join(" + ");
             }
 
-            // Loopa igenom artiklar och kolla matchning
+            // Loop through articles and check for match (AND logic)
             articles.forEach(article => {
                 const articleTags = article.getAttribute('data-tags').split(',');
 
-                // LOGIKEN: Alla valda taggar måste finnas i artikelns taggar (AND)
-                // Tips: Byt .every() mot .some() om du vill ha "OR" (Guide ELLER Linux)
+                // Logic: All selected tags must exist in the article
                 const isMatch = selectedTags.every(val => articleTags.includes(val));
 
                 if (isMatch || selectedTags.length === 0) {
@@ -185,7 +182,7 @@
                 }
             });
 
-            // Visa meddelande om inget hittades
+            // Show 'No Results' message
             if (visibleCount === 0) {
                 noResultsMsg.classList.remove('hidden');
             } else {

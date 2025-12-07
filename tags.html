@@ -6,8 +6,28 @@
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <link rel="stylesheet" href="/_assets/main.css" />
 
-    <title>Tags - vampyren.github.io</title>
+    <title>Search & Tags - vampyren.github.io</title>
     <style>
+        .search-container {
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+        }
+        #search-input {
+            width: 100%;
+            padding: 12px;
+            font-size: 1.1em;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box; /* Ensures padding doesn't widen element */
+        }
+        #search-input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
         .tag-btn {
             display: inline-block;
             padding: 8px 15px;
@@ -20,37 +40,26 @@
             transition: all 0.2s;
             user-select: none;
         }
-        .tag-btn:hover {
-            background-color: #e0e0e0;
-            border-color: #999;
-        }
-        /* Active button (Selected) */
+        .tag-btn:hover { background-color: #e0e0e0; border-color: #999; }
         .tag-btn.active {
-            background-color: #007bff; /* Blue */
-            color: white;
-            border-color: #0056b3;
+            background-color: #007bff; color: white; border-color: #0056b3;
             box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
-        /* Reset button */
-        .tag-btn.reset-btn {
-            background-color: #333;
-            color: white;
-            border-color: #000;
-        }
+        .tag-btn.reset-btn { background-color: #333; color: white; border-color: #000; }
+
         .article-item {
             padding: 15px 0;
             border-bottom: 1px solid #eee;
             transition: opacity 0.3s;
         }
-        .hidden {
-            display: none !important;
-        }
-        /* Status text showing active filters */
+        .hidden { display: none !important; }
+
         #filter-status {
             margin-bottom: 10px;
             font-size: 0.9em;
             color: #666;
             min-height: 20px;
+            font-style: italic;
         }
     </style>
 </head>
@@ -61,7 +70,11 @@
         </nav>
 
         <div class="homepage-main">
-            <h1>Filter by Tags</h1>
+            <h1>Search & Filter</h1>
+
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Type to search titles and content..." onkeyup="applyFilters()">
+            </div>
 
             <p id="filter-status">Showing all articles</p>
 
@@ -83,7 +96,247 @@
 
             <div id="article-list">
                 
-                    <div class="article-item" data-tags="yt-dlp,guide">
+                    <div class="article-item"
+                         data-tags="yt-dlp,guide"
+                         data-search="build yt-dlp.exe &amp;nbsp;
+
+# **build yt-dlp.exe from source on windows (final guide)**
+
+## **1\. required tools**
+
+download and install the following:
+
+### **python**
+
+https://www.python.org/downloads/  
+check during install: **add python to path**
+
+### **git for windows**
+
+https://git-scm.com/downloads/win
+
+### **visual c++ build tools**
+
+https://visualstudio.microsoft.com/visual-cpp-build-tools/  
+install components:
+
+- msvc v143 build tools
+    
+- windows 10/11 sdk
+    
+- (optional) cmake tools
+    
+
+### **ffmpeg (optional but recommended)**
+
+https://www.gyan.dev/ffmpeg/builds/  
+extract to:
+
+```
+c:\util\ffmpeg\
+```
+
+* * *
+
+## **2\. environment variables (dev vm)**
+
+add these to *path*:
+
+```
+c:\users\shadow\appdata\local\programs\python\python314
+c:\users\shadow\appdata\local\programs\python\python314\scripts
+```
+
+add this **new variable**:
+
+**variable name:** `ytdlp_path`  
+**value:**
+
+```
+c:\users\shadow\appdata\local\programs\python\python314\lib\site-packages\yt_dlp
+```
+
+* * *
+
+## **3\. one-time setup**
+
+run in powershell:
+
+```powershell
+python -m pip install --upgrade pip
+python -m pip install yt-dlp
+python -m pip install pyinstaller
+python -m pip install --upgrade certifi
+```
+
+* * *
+
+## **4\. build yt-dlp.exe**
+
+below are instructions for **powershell** and **git bash**  
+(use the one that matches the shell you run!).
+
+* * *
+
+## **4a. build using powershell (recommended)**
+
+powershell expands environment variables as:
+
+```
+$env:variable_name
+```
+
+run:
+
+```powershell
+pyinstaller --onefile --name yt-dlp &amp;quot;$env:ytdlp_path\__main__.py&amp;quot;
+```
+
+* * *
+
+## **4b. build using git bash**
+
+git bash uses:
+
+- `$variable` instead of `%variable%`
+    
+- **forward slashes only**
+    
+
+first ensure the variable exists:
+
+```bash
+echo $ytdlp_path
+```
+
+if empty, set it manually:
+
+```bash
+export ytdlp_path=&amp;quot;/c/users/shadow/appdata/local/programs/python/python314/lib/site-packages/yt_dlp&amp;quot;
+```
+
+then build:
+
+```bash
+pyinstaller --onefile --name yt-dlp &amp;quot;$ytdlp_path/__main__.py&amp;quot;
+```
+
+* * *
+
+## **5\. output of build**
+
+after building, your exe is located at:
+
+```
+dist/yt-dlp.exe
+```
+
+copy it to:
+
+```
+c:\util\yt-dlp\
+```
+
+* * *
+
+## **6\. using yt-dlp on other pcs**
+
+set path:
+
+```
+c:\util\yt-dlp\
+c:\util\ffmpeg\bin\
+```
+
+then you can run:
+
+```
+yt-dlp --version
+```
+
+* * *
+
+## **7\. updating your build**
+
+when yt-dlp publishes a new version:
+
+```powershell
+python -m pip install --upgrade yt-dlp
+pyinstaller --onefile --name yt-dlp &amp;quot;$env:ytdlp_path\__main__.py&amp;quot;
+```
+
+* * *
+
+## **8\. clean the build output**
+
+to reset the build directory:
+
+**powershell:**
+
+```powershell
+remove-item -recurse -force build, dist, yt-dlp.spec
+```
+
+**git bash:**
+
+```bash
+rm -rf build dist yt-dlp.spec
+```
+
+* * *
+
+## **9\. useful commands**
+
+```
+yt-dlp --version
+python --version
+where python
+where yt-dlp
+```
+
+* * *
+
+## **10\. shell behavior summary**
+
+| shell | variable syntax | path style |
+| --- | --- | --- |
+| powershell | `$env:varname` | backslashes allowed |
+| cmd | `%varname%` | backslashes allowed |
+| git bash | `$varname` | only forward slashes |
+
+* * *
+
+## **11\. optional: build from github source**
+
+clone repository:
+
+```powershell
+git clone https://github.com/yt-dlp/yt-dlp.git
+cd yt-dlp
+```
+
+install dependencies:
+
+```powershell
+python -m pip install -r requirements.txt
+```
+
+build using internal dev script:
+
+```powershell
+python devscripts\make_exe.py
+```
+
+output:
+
+```
+build/yt-dlp.exe
+```
+
+* * *
+
+# **guide complete**">
+
                         <time style="color: gray; font-size: 0.8em;">
                             2025-12-07
                         </time>
@@ -101,7 +354,35 @@
                         </div>
                     </div>
                 
-                    <div class="article-item" data-tags="boot,cachyos">
+                    <div class="article-item"
+                         data-tags="boot,cachyos"
+                         data-search="fixa boot + lan  ![ae0aac74b225886f96ed2784a7cc9563.png](:/7a418dd3987a41c99bfb7c3ca2d5f815)
+
+vid boot också tryck e första gången och ta bort ordet
+
+remove &amp;quot;splash&amp;quot; i denna fil och sen kör andra commandot:
+
+## step 1)
+
+```
+sudo nano /etc/default/limine
+sudo limine-mkinitcpio
+```
+
+## step 2)
+
+```
+kernel_cmdline[default]+=&amp;quot;quiet pcie_aspm=off nowatchdog rw rootflags=subvol=/@ root=uuid=36835f32-91ee-4350-ac34-cb10dbeb9539&amp;quot;
+```
+
+### step 3)
+
+```
+sudo limine-mkinitcpio
+```
+
+* * *">
+
                         <time style="color: gray; font-size: 0.8em;">
                             2025-09-05
                         </time>
@@ -121,8 +402,8 @@
                 
             </div>
 
-            <div id="no-results" class="hidden" style="color: red; padding: 20px;">
-                No articles match this combination of tags.
+            <div id="no-results" class="hidden" style="color: red; padding: 20px; text-align: center;">
+                No matches found. Try a different search term or tag.
             </div>
         </div>
     </div>
@@ -130,8 +411,23 @@
     <script>
         let selectedTags = [];
 
+        // 1. Run on Page Load: Check URL for ?tag=something
+        window.onload = function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tagParam = urlParams.get('tag');
+
+            if (tagParam) {
+                // Find the button and simulate a click or manually set state
+                const buttons = document.querySelectorAll('.tag-btn');
+                buttons.forEach(btn => {
+                    if (btn.innerText === '#' + tagParam) {
+                        toggleTag(tagParam, btn);
+                    }
+                });
+            }
+        };
+
         function toggleTag(tag, btnElement) {
-            // 1. Add or remove tag from selection
             if (selectedTags.includes(tag)) {
                 selectedTags = selectedTags.filter(t => t !== tag);
                 btnElement.classList.remove('active');
@@ -139,13 +435,12 @@
                 selectedTags.push(tag);
                 btnElement.classList.add('active');
             }
-
-            // 2. Apply the filter
             applyFilters();
         }
 
         function resetFilters() {
             selectedTags = [];
+            document.getElementById('search-input').value = ""; // Clear search
             document.querySelectorAll('.tag-btn').forEach(btn => {
                 if (!btn.classList.contains('reset-btn')) {
                     btn.classList.remove('active');
@@ -158,23 +453,29 @@
             const articles = document.querySelectorAll('.article-item');
             const statusText = document.getElementById('filter-status');
             const noResultsMsg = document.getElementById('no-results');
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
             let visibleCount = 0;
 
-            // Update status text
-            if (selectedTags.length === 0) {
-                statusText.innerText = "Showing all articles";
-            } else {
-                statusText.innerText = "Showing articles with: " + selectedTags.join(" + ");
-            }
+            // Status Text Logic
+            let statusString = "Showing articles";
+            if (selectedTags.length > 0) statusString += " tagged: " + selectedTags.join(" + ");
+            if (searchTerm.length > 0) statusString += " matching: '" + searchTerm + "'";
+            if (selectedTags.length === 0 && searchTerm.length === 0) statusString = "Showing all articles";
+            statusText.innerText = statusString;
 
-            // Loop through articles and check for match (AND logic)
+            // Filtering Logic
             articles.forEach(article => {
                 const articleTags = article.getAttribute('data-tags').split(',');
+                const searchData = article.getAttribute('data-search');
 
-                // Logic: All selected tags must exist in the article
-                const isMatch = selectedTags.every(val => articleTags.includes(val));
+                // Check 1: Tags (Must match ALL selected tags)
+                const tagMatch = selectedTags.length === 0 || selectedTags.every(val => articleTags.includes(val));
 
-                if (isMatch || selectedTags.length === 0) {
+                // Check 2: Search (Title/Content must contain search term)
+                const textMatch = searchTerm.length === 0 || searchData.includes(searchTerm);
+
+                if (tagMatch && textMatch) {
                     article.classList.remove('hidden');
                     visibleCount++;
                 } else {
@@ -182,7 +483,7 @@
                 }
             });
 
-            // Show 'No Results' message
+            // No Results Logic
             if (visibleCount === 0) {
                 noResultsMsg.classList.remove('hidden');
             } else {

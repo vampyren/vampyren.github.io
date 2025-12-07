@@ -9,29 +9,25 @@
     <title>vampyren.github.io</title>
     <style>
         /* --- CSS for Dashboard Layout --- */
-
-        /* 1. Hero Section (Top Banner) */
         .hero-section {
             text-align: center;
             padding: 40px 20px;
-            background-color: #f8f9fa; /* Light grey background */
+            background-color: #f8f9fa;
             border-bottom: 1px solid #e9ecef;
             margin-bottom: 40px;
         }
         .hero-title { font-size: 2.5em; margin-bottom: 10px; color: #333; }
         .hero-subtitle { color: #666; font-size: 1.2em; font-weight: 300; }
 
-        /* 2. Main Grid Layout */
         .content-grid {
             display: grid;
-            grid-template-columns: 2fr 1fr; /* Left side is wider (2/3), Right is narrow (1/3) */
+            grid-template-columns: 2fr 1fr;
             gap: 50px;
             max-width: 1000px;
             margin: 0 auto;
             padding: 0 20px;
         }
 
-        /* Mobile Responsive: Stack columns on small screens */
         @media (max-width: 768px) {
             .content-grid { grid-template-columns: 1fr; }
         }
@@ -45,7 +41,6 @@
             letter-spacing: 1px;
         }
 
-        /* Latest Posts Styling */
         .post-card {
             margin-bottom: 30px;
             padding-bottom: 20px;
@@ -65,7 +60,6 @@
             margin-right: 5px;
         }
 
-        /* Sidebar Styling */
         .tag-cloud a {
             display: inline-block;
             margin: 4px;
@@ -103,12 +97,9 @@
         </div>
 
         <div class="content-grid">
-
             <div class="latest-feed">
                 <h2 class="section-header">Latest Updates</h2>
-
                 
-
                 
                     <div class="post-card">
                         <time class="post-date">2025-12-07</time>
@@ -142,9 +133,7 @@
                         </div>
                     </div>
                 
-
                 
-
                 <a href="archives.html" style="display: inline-block; margin-top: 20px; font-weight: bold;">View Full Archive &rarr;</a>
             </div>
 
@@ -153,13 +142,13 @@
                 <div class="tag-cloud">
                     
                     
-                        <a href="tags.html">#boot</a>
+                        <a href="tags.html?tag=boot">#boot</a>
                     
-                        <a href="tags.html">#cachyos</a>
+                        <a href="tags.html?tag=cachyos">#cachyos</a>
                     
-                        <a href="tags.html">#guide</a>
+                        <a href="tags.html?tag=guide">#guide</a>
                     
-                        <a href="tags.html">#yt-dlp</a>
+                        <a href="tags.html?tag=yt-dlp">#yt-dlp</a>
                     
                 </div>
 

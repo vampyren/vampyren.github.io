@@ -4,7 +4,7 @@
         <title></title>
         <link>undefined</link>
         <description>undefined</description>
-        <lastBuildDate>Sun, 07 Dec 2025 16:22:08 GMT</lastBuildDate>
+        <lastBuildDate>Sun, 07 Dec 2025 16:24:03 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>Joplin Pages Publisher</generator>
         <item>
@@ -153,6 +153,23 @@ python <span class="hljs-comment">--version</span>
 <div><pre class="hljs"><code><span class="hljs-keyword">build</span>/yt-dlp.exe</code></pre></div>
 <hr />
 <h1 id="guide-complete"><strong>Guide Complete</strong></h1>
+]]></content:encoded>
+        </item>
+        <item>
+            <title><![CDATA[Fixa boot + LAN ]]></title>
+            <guid>57af4023a3c4429a88dddc0bfad795ca</guid>
+            <pubDate>Fri, 05 Sep 2025 20:13:16 GMT</pubDate>
+            <content:encoded><![CDATA[<p><img src="/_resources/7a418dd3987a41c99bfb7c3ca2d5f815.png" /></p>
+<p>Vid boot också tryck E första gången och ta bort ordet</p>
+<p>Remove "splash" i denna fil och sen kör andra commandot:</p>
+<h2 id="step-1">Step 1)</h2>
+<div><pre class="hljs"><code>sudo nano <span class="hljs-regexp">/etc/</span><span class="hljs-keyword">default</span>/limine
+sudo limine-mkinitcpio</code></pre></div>
+<h2 id="step-2">Step 2)</h2>
+<div><pre class="hljs"><code>KERNEL_CMDLINE[<span class="hljs-keyword">default</span>]+=<span class="hljs-string">"quiet pcie_aspm=off nowatchdog rw rootflags=subvol=/@ root=UUID=36835f32-91ee-4350-ac34-cb10dbeb9539"</span></code></pre></div>
+<h3 id="step-3">Step 3)</h3>
+<div><pre class="hljs"><code><span class="hljs-attribute">sudo limine-mkinitcpio</span></code></pre></div>
+<hr />
 ]]></content:encoded>
         </item>
     </channel>

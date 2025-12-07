@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<link rel="stylesheet" href="/_assets/main.css" />
+
+    <title>Fixa boot + LAN  - vampyren.github.io</title>
+  <link rel="stylesheet" href="/_markdown_plugin_assets/highlight.js/atom-one-light.css" /></head>
+  <body>
+    <div class="main">
+      <nav class="navigation">
+        <a href="/">vampyren.github.io</a>
+      </nav>
+      <article>
+        <header>
+          <h1 class="article-title">Fixa boot + LAN </h1>
+          <div class="article-info">
+            <div>
+              <span
+                >Created At：<time datetime="1757103196850"
+                  >2025-09-05 22:13</time
+                ></span
+              >
+              <span
+                >Updated At：<time datetime="1761991037723"
+                  >2025-11-01 10:57</time
+                ></span
+              >
+            </div>
+            
+            <div>
+              Keywords: 
+              <span class="keyword">boot</span>
+              
+              <span class="keyword">cachyos</span>
+              
+            </div>
+            
+          </div>
+        </header>
+        <div class="article-content markdown-body"><p><img src="/_resources/7a418dd3987a41c99bfb7c3ca2d5f815.png" /></p>
+<p>Vid boot också tryck E första gången och ta bort ordet</p>
+<p>Remove "splash" i denna fil och sen kör andra commandot:</p>
+<h2 id="step-1">Step 1)</h2>
+<div><pre class="hljs"><code>sudo nano <span class="hljs-regexp">/etc/</span><span class="hljs-keyword">default</span>/limine
+sudo limine-mkinitcpio</code></pre></div>
+<h2 id="step-2">Step 2)</h2>
+<div><pre class="hljs"><code>KERNEL_CMDLINE[<span class="hljs-keyword">default</span>]+=<span class="hljs-string">"quiet pcie_aspm=off nowatchdog rw rootflags=subvol=/@ root=UUID=36835f32-91ee-4350-ac34-cb10dbeb9539"</span></code></pre></div>
+<h3 id="step-3">Step 3)</h3>
+<div><pre class="hljs"><code><span class="hljs-attribute">sudo limine-mkinitcpio</span></code></pre></div>
+<hr />
+</div>
+      </article>
+    </div>
+  </body>
+</html>
